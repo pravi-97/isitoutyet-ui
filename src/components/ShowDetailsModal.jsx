@@ -5,6 +5,7 @@ import "./styles/ShowDetailsModal.css";
 export default function ShowDetailsModal({ showId, onClose }) {
     const [show, setShow] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isTrackable, setIsTrackable] = useState(false);
 
     useEffect(() => {
         if (!showId) return;
@@ -21,9 +22,9 @@ export default function ShowDetailsModal({ showId, onClose }) {
 
         setLoading(true);
         getShowById(showId)
-            //   .then(res => res.data))
             .then(json => {
                 setShow(json.data);
+                setIsTrackable(!["Ended", "Canceled"].includes(json.data.status));
                 setLoading(false);
             });
     }, [showId]);
@@ -87,8 +88,8 @@ export default function ShowDetailsModal({ showId, onClose }) {
                                         More details
                                     </button>
                                     <button
-                                        disabled={show.status !== "Returning Series"}
-                                        className={`px-4 py-2 rounded-md text-sm font-semibold transition ${show.status === "Returning Series"
+                                        disabled={!isTrackable}
+                                        className={`px-4 py-2 rounded-md text-sm font-semibold transition ${isTrackable
                                             ? "bg-green-600 hover:bg-green-700 text-white"
                                             : "bg-slate-700 text-slate-400 cursor-not-allowed"
                                             }`}
@@ -96,12 +97,13 @@ export default function ShowDetailsModal({ showId, onClose }) {
                                         Track
                                     </button>
 
-                                    {/* Helper text */}
-                                    {show.status !== "Returning Series" && (
+
+                                    {!isTrackable && (
                                         <p className="mt-1 text-xs text-slate-400">
-                                            Tracking is available only for running shows
+                                            Tracking is disabled for ended or canceled shows
                                         </p>
                                     )}
+
                                 </div>
                             </div>
                         </div>
