@@ -1,0 +1,69 @@
+import { useEffect, useState } from "react";
+import { fetchTrendingShows, fetchMyDetails } from "../api/showApi";
+import ShowCardsRow from "../components/shows/ShowCardsRow";
+import { logout } from "../services/authService";
+import SearchBar from "../components/SearchBar";
+import { useNavigate } from "react-router-dom";
+
+export default function Home() {
+  const [trending, setTrending] = useState([]);
+  const [trendingError, setTrendingError] = useState(null);
+  const [myDetailsError, setMyDetailsError] = useState(null);
+  const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
+  const [myDetails, setMyDetails] = useState({});
+  const [myShows, setMyShows] = useState([]);
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (query.trim().length < 2) return;
+    navigate(`/search?showName=${encodeURIComponent(query.trim())}`);
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchTrendingShows(1)
+      .then((res) => {
+        if (!cancelled) setTrending(res.data.results ?? []);
+      })
+      .catch((err) => {
+        if (!cancelled) setTrendingError(err.message);
+      });
+
+    fetchMyDetails()
+      .then((res) => {
+        if (!cancelled) setMyDetails(res.data.userDto ?? {});
+        if (!cancelled) setMyShows(res.data.showDetails ?? []);        
+      })
+      .catch((err) => {
+        if (!cancelled) setMyDetailsError(err.message);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (error) {
+    return (
+      <div className="px-6 py-4 bg-slate-900 min-h-screen">
+        <p className="text-red-500">{error}</p>
+        <button onClick={logout}>Logout</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="px-6 py-4 bg-slate-900 min-h-screen">
+      <SearchBar
+        value={query}
+        onChange={setQuery}
+        onSearch={handleSearch}
+      />
+      <ShowCardsRow shows={myShows} title={"My Shows"} />
+      <ShowCardsRow shows={trending} title={"🔥Trending Shows"} />
+      <button onClick={logout}>Logout</button>
+    </div>
+  );
+}
