@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { getShowById } from "../api/showApi";
+import { getShowById, trackNewShowDefault } from "../api/showApi";
 import "./styles/ShowDetailsModal.css";
+import { useMyShowIds } from "../context/AppContext";
+import toast from "react-hot-toast";
+import { Send } from 'lucide-react';
 
 export default function ShowDetailsModal({ showId, onClose }) {
     const [show, setShow] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isTrackable, setIsTrackable] = useState(false);
+    const { myShowIds, setMyShowIds } = useMyShowIds();
 
     useEffect(() => {
         if (!showId) return;
@@ -30,6 +34,39 @@ export default function ShowDetailsModal({ showId, onClose }) {
     }, [showId]);
 
     if (!showId) return null;
+
+    const isTracking = showId => myShowIds.includes(showId);
+
+    const trackShowDefaults = (showId) => {
+        setLoading(true);
+        const body = {
+            tmdbId: showId,
+            tvmazeId: showId,
+            notifyNewEpisode: true,
+            notifyEpisodeOnReleaseDay: true,
+            notifyNewSeason: true,
+            notifySeasonConfirmed: false,
+            notifyEpisodeDayBefore: false,
+            notifyEpisodeAfterRelease: false,
+            tracking: true
+        };
+
+        trackNewShowDefault(body)
+            .then((res) => {
+                if (res.statusCode === 200) {
+                    toast.success("Show added with default notifications. You can change this later");
+                    setMyShowIds(prev =>
+                        prev.includes(showId) ? prev : [...prev, showId]
+                    );
+                } else {
+                    toast.error("Failed to track show! Try again after some time");
+                }
+            })
+            .catch(() => {
+                toast.error("Failed to track show! Try again after some tim");
+            })
+            .finally(() => setLoading(false));
+    };
 
     return (
         <div className="modal-backdrop">
@@ -88,14 +125,27 @@ export default function ShowDetailsModal({ showId, onClose }) {
                                         More details
                                     </button>
                                     <button
-                                        disabled={!isTrackable}
-                                        className={`px-4 py-2 rounded-md text-sm font-semibold transition ${isTrackable
-                                            ? "bg-green-600 hover:bg-green-700 text-white"
-                                            : "bg-slate-700 text-slate-400 cursor-not-allowed"
+                                        disabled={!isTrackable || isTracking(showId)}
+                                        onClick={() => trackShowDefaults(showId)}
+                                        className={`px-4 py-2 rounded-md text-sm font-semibold transition
+                                        ${!isTrackable
+                                                ? "bg-slate-700 text-slate-400 cursor-not-allowed"
+                                                : isTracking(showId)
+                                                    ? "bg-blue-600 text-white cursor-default"
+                                                    : "bg-green-600 hover:bg-green-700 text-white"
                                             }`}
                                     >
-                                        Track
+                                        {isTracking(showId) ? (
+                                            "Tracking"
+                                        ) : (
+                                            <span className="inline-flex items-center gap-1">
+                                                Track {loading && <Send size={14} />}
+                                            </span>
+                                        )}
+
+
                                     </button>
+
 
 
                                     {!isTrackable && (

@@ -22,7 +22,6 @@ const Search = () => {
 
     const handleSearch = () => {
         if (query.trim().length < 2) return;
-        console.log(query);
 
         setLoading(true);
         setError(null);

@@ -4,6 +4,8 @@ import ShowCardsRow from "../components/shows/ShowCardsRow";
 import { logout } from "../services/authService";
 import SearchBar from "../components/SearchBar";
 import { useNavigate } from "react-router-dom";
+import { useMyShowIds } from "../context/AppContext";
+import NotificationsInlineRow from "../components/NotificationsInlineRow";
 
 export default function Home() {
   const [trending, setTrending] = useState([]);
@@ -14,6 +16,8 @@ export default function Home() {
   const [myDetails, setMyDetails] = useState({});
   const [myShows, setMyShows] = useState([]);
   const navigate = useNavigate();
+  const { myShowIds, setMyShowIds } = useMyShowIds();
+
 
   const handleSearch = () => {
     if (query.trim().length < 2) return;
@@ -34,7 +38,14 @@ export default function Home() {
     fetchMyDetails()
       .then((res) => {
         if (!cancelled) setMyDetails(res.data.userDto ?? {});
-        if (!cancelled) setMyShows(res.data.showDetails ?? []);        
+        if (!cancelled) setMyShows(res.data.showDetails ?? []);
+        // res.data.showDetails?.forEach(show => {
+        //   setMyShowIds(prev =>
+        //     prev.includes(show.id) ? prev : [...prev, show.id]
+        //   );
+        // });
+        const ids = res.data.showDetails?.map(s => s.id) ?? [];
+        setMyShowIds(ids);
       })
       .catch((err) => {
         if (!cancelled) setMyDetailsError(err.message);
@@ -43,7 +54,7 @@ export default function Home() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [], myShowIds);
 
   if (error) {
     return (
@@ -61,9 +72,10 @@ export default function Home() {
         onChange={setQuery}
         onSearch={handleSearch}
       />
+      {myShowIds.length > 0 ? <NotificationsInlineRow trackedCount={myShowIds.length} notificationsEnabled={true} /> : null}
+
       <ShowCardsRow shows={myShows} title={"My Shows"} />
       <ShowCardsRow shows={trending} title={"🔥Trending Shows"} />
-      <button onClick={logout}>Logout</button>
     </div>
   );
 }

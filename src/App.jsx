@@ -7,17 +7,22 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import AppLayout from "./layouts/AppLayout";
 import Search from "./pages/Search";
+import { AppProvider } from "./context/AppContext";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
     <AuthProvider>
+      <Toaster position="top-right"/>
       <BrowserRouter>
         <Routes>
           {/* Protected area (after login) */}
           <Route
             element={
               <ProtectedRoute>
-                <AppLayout />
+                <AppProvider>
+                  <AppLayout />
+                </AppProvider>
               </ProtectedRoute>
             }
           >

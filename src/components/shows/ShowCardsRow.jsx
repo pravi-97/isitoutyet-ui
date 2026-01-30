@@ -1,16 +1,25 @@
 const IMAGE_BASE = "https://image.tmdb.org/t/p/w300";
+import ShowDetailsModal from "../ShowDetailsModal";
+import { useState } from "react";
 
 export default function ShowCardsRow({ shows, title }) {
+  const [selectedShowId, setSelectedShowId] = useState(null);
   return (
     <section className="mb-8">
       <h2 className="text-lg font-semibold text-white mb-4">
         {title}
       </h2>
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
-        {shows.map((show) => (            
+        {shows.length === 0 && (
+          <p className="text-slate-300">
+            No shows tracked yet. Search or add a trending show to get started.
+          </p>
+        )}
+        {shows.map((show) => (
           <div
             key={show.id}
             className="min-w-[140px] max-w-[140px] flex-shrink-0"
+            onClick={() => setSelectedShowId(show.id)}
           >
             <div className="rounded-lg overflow-hidden bg-slate-800 border border-slate-700 hover:scale-105 transition">
               <img
@@ -34,6 +43,10 @@ export default function ShowCardsRow({ shows, title }) {
           </div>
         ))}
       </div>
+      <ShowDetailsModal
+        showId={selectedShowId}
+        onClose={() => setSelectedShowId(null)}
+      />
     </section>
   );
 }

@@ -5,7 +5,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { auth } from "../firebase/firebase"; // <--- You import it here
+import { auth } from "../firebase/fireBase";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -28,5 +28,4 @@ export const getIdToken = async () => {
   return await user.getIdToken();
 };
 
-// 👇 ADD THIS LINE SO APICLIENT CAN USE IT
 export { auth };
