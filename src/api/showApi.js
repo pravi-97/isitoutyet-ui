@@ -29,3 +29,17 @@ export function trackNewShowDefault(body) {
     body: JSON.stringify(body)
   })
 }
+
+export function getAllTrackedShows() {
+  return apiFetch("/track/all");
+}
+
+export function updateTrackedShows(body){
+  return apiFetch("/track/update", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  })
+}

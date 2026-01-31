@@ -39,11 +39,6 @@ export default function Home() {
       .then((res) => {
         if (!cancelled) setMyDetails(res.data.userDto ?? {});
         if (!cancelled) setMyShows(res.data.showDetails ?? []);
-        // res.data.showDetails?.forEach(show => {
-        //   setMyShowIds(prev =>
-        //     prev.includes(show.id) ? prev : [...prev, show.id]
-        //   );
-        // });
         const ids = res.data.showDetails?.map(s => s.id) ?? [];
         setMyShowIds(ids);
       })
@@ -54,7 +49,7 @@ export default function Home() {
     return () => {
       cancelled = true;
     };
-  }, [], myShowIds);
+  }, []);
 
   if (error) {
     return (
@@ -74,8 +69,8 @@ export default function Home() {
       />
       {myShowIds.length > 0 ? <NotificationsInlineRow trackedCount={myShowIds.length} notificationsEnabled={true} /> : null}
 
-      <ShowCardsRow shows={myShows} title={"My Shows"} />
-      <ShowCardsRow shows={trending} title={"🔥Trending Shows"} />
+      <ShowCardsRow shows={myShows} title={"My Shows"} message={"No shows tracked yet. Search or add a trending show to get started."} />
+      <ShowCardsRow shows={trending} title={"🔥Trending Shows"} message={"Loading Trending Shows..."}/>
     </div>
   );
 }

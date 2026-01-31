@@ -2,7 +2,7 @@ const IMAGE_BASE = "https://image.tmdb.org/t/p/w300";
 import ShowDetailsModal from "../ShowDetailsModal";
 import { useState } from "react";
 
-export default function ShowCardsRow({ shows, title }) {
+export default function ShowCardsRow({ shows, title, message }) {
   const [selectedShowId, setSelectedShowId] = useState(null);
   return (
     <section className="mb-8">
@@ -12,7 +12,7 @@ export default function ShowCardsRow({ shows, title }) {
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
         {shows.length === 0 && (
           <p className="text-slate-300">
-            No shows tracked yet. Search or add a trending show to get started.
+            {message || "No shows found"}
           </p>
         )}
         {shows.map((show) => (

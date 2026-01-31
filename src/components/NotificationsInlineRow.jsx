@@ -9,7 +9,7 @@ export default function NotificationsInlineRow({
 
   return (
     <div
-      onClick={() => navigate("/settings/notifications")}
+      onClick={() => navigate("/my-shows")}
       className="flex items-center justify-between px-4 py-2 mb-4 rounded-md
                  bg-slate-800/40 hover:bg-slate-800/60 cursor-pointer transition"
     >

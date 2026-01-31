@@ -78,15 +78,34 @@ export default function Signup() {
             Create Account
           </button>
 
-          <p className="text-sm text-slate-400 text-center">
-            Already have an account?{" "}
+          <p className="text-xs text-slate-400 text-center">
+            By continuing, you agree to our{" "}
             <span
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/terms-and-privacy")}
               className="text-green-400 cursor-pointer hover:underline"
             >
-              Sign in
+              Terms of Service
+            </span>{" "}
+            and{" "}
+            <span
+              onClick={() => navigate("/terms-and-privacy")}
+              className="text-green-400 cursor-pointer hover:underline"
+            >
+              Privacy Policy
+            </span>.
+          </p>
+          <p className="text-sm text-slate-400 text-center space-x-2">
+            <span>
+              Already have an account?{" "}
+              <span
+                onClick={() => navigate("/login")}
+                className="text-green-400 cursor-pointer hover:underline"
+              >
+                Sign in
+              </span>
             </span>
           </p>
+
         </form>
       </div>
     </div>

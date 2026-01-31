@@ -9,11 +9,13 @@ import AppLayout from "./layouts/AppLayout";
 import Search from "./pages/Search";
 import { AppProvider } from "./context/AppContext";
 import { Toaster } from "react-hot-toast";
+import MyShows from "./pages/MyShows";
+import TermsAndPrivacy from "./pages/TermsAndPrivacy";
 
 export default function App() {
   return (
     <AuthProvider>
-      <Toaster position="top-right"/>
+      <Toaster position="top-right" />
       <BrowserRouter>
         <Routes>
           {/* Protected area (after login) */}
@@ -28,22 +30,28 @@ export default function App() {
           >
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/my-shows" element={<MyShows />} />
           </Route>
 
           {/* Public routes */}
-          <Route
-            path="/login"
+          <Route path="/login"
             element={
               <PublicRoute>
                 <Login />
               </PublicRoute>
             }
           />
-          <Route
-            path="/signup"
+          <Route path="/signup"
             element={
               <PublicRoute>
                 <Signup />
+              </PublicRoute>
+            }
+          />
+          <Route path="/terms-and-privacy"
+            element={
+              <PublicRoute>
+                <TermsAndPrivacy />
               </PublicRoute>
             }
           />
