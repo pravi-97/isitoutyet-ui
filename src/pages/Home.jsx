@@ -17,11 +17,11 @@ export default function Home() {
   const [myShows, setMyShows] = useState([]);
   const navigate = useNavigate();
   const { myShowIds, setMyShowIds } = useMyShowIds();
-
+  const [nsfw, setNsfw] = useState(false);
 
   const handleSearch = () => {
-    if (query.trim().length < 2) return;
-    navigate(`/search?showName=${encodeURIComponent(query.trim())}`);
+    if (query.trim().length < 2) return;    
+    navigate(`/search?showName=${encodeURIComponent(query.trim())}&nsfw=${nsfw}`);
   };
 
   useEffect(() => {
@@ -66,11 +66,13 @@ export default function Home() {
         value={query}
         onChange={setQuery}
         onSearch={handleSearch}
+        nsfw={nsfw}
+        setNsfw={setNsfw}
       />
       {myShowIds.length > 0 ? <NotificationsInlineRow trackedCount={myShowIds.length} notificationsEnabled={true} /> : null}
 
       <ShowCardsRow shows={myShows} title={"My Shows"} message={"No shows tracked yet. Search or add a trending show to get started."} />
-      <ShowCardsRow shows={trending} title={"🔥Trending Shows"} message={"Loading Trending Shows..."}/>
+      <ShowCardsRow shows={trending} title={"🔥Trending Shows"} message={"Loading Trending Shows..."} />
     </div>
   );
 }

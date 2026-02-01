@@ -81,14 +81,14 @@ export default function Signup() {
           <p className="text-xs text-slate-400 text-center">
             By continuing, you agree to our{" "}
             <span
-              onClick={() => navigate("/terms-and-privacy")}
+              onClick={() => navigate("/terms-and-privacy#terms_of_service")}
               className="text-green-400 cursor-pointer hover:underline"
             >
               Terms of Service
             </span>{" "}
             and{" "}
             <span
-              onClick={() => navigate("/terms-and-privacy")}
+              onClick={() => navigate("/terms-and-privacy#privacy_policy")}
               className="text-green-400 cursor-pointer hover:underline"
             >
               Privacy Policy

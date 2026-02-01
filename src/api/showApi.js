@@ -8,8 +8,8 @@ export function fetchMyDetails() {
   return apiFetch(`/user/me`);
 }
 
-export function searchShowByName(showName, page = 1) {
-  return apiFetch(`/shows/search?name=${showName}&page=${page}`);
+export function searchShowByName(showName, page = 1, nsfw) {
+  return apiFetch(`/shows/search?name=${showName}&page=${page}&nsfw=${nsfw}`);
 }
 
 export function getShowById(showId) {
@@ -41,5 +41,15 @@ export function updateTrackedShows(body){
       "Content-Type": "application/json"
     },
     body: JSON.stringify(body)
+  })
+}
+
+export function fetchMyDetailsMini() {
+  return apiFetch(`/user/me/mini`);
+}
+
+export function updateUserDetails(name){
+  return apiFetch(`/user/update?name=${name}`, {
+    method: "PUT"
   })
 }

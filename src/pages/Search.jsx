@@ -14,6 +14,7 @@ const Search = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [query, setQuery] = useState(showName ?? "");
+    const [nsfw, setNsfw] = useState(searchParams.get("nsfw") === "true");
 
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
@@ -30,7 +31,7 @@ const Search = () => {
         setHasMore(true);
         setShowName(query);
         setSearchParams({ showName: query });
-        searchShowByName(query, 1)
+        searchShowByName(query, 1, nsfw)
             .then((res) => {
                 setShows(res.data.results ?? []);
             })
@@ -52,7 +53,7 @@ const Search = () => {
         setPage(1);
         setHasMore(true);
 
-        searchShowByName(showName, 1)
+        searchShowByName(showName, 1, nsfw)
             .then((res) => {
                 setShows(res.data.results ?? []);
             })
@@ -71,7 +72,7 @@ const Search = () => {
 
         setLoading(true);
 
-        searchShowByName(showName, page)
+        searchShowByName(showName, page, nsfw)
             .then((res) => {
                 const results = res.data.results ?? [];
 
@@ -126,6 +127,8 @@ const Search = () => {
                 value={query}
                 onChange={setQuery}
                 onSearch={handleSearch}
+                nsfw={nsfw}
+                setNsfw={setNsfw}
             />
 
             <ShowCardsGrid

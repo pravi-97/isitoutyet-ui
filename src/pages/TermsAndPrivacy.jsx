@@ -1,13 +1,23 @@
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 export default function TermsAndPrivacy() {
     // Fallback email to prevent broken links if env is missing
     const email = import.meta.env.VITE_CONTACT_EMAIL;
 
+    const location = useLocation();
+
+    useEffect(() => {
+        if (!location.hash) return;
+
+        const id = location.hash.substring(1);
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }, [location]);
     return (
         <div className="min-h-screen bg-slate-900 text-slate-300 px-4 py-10">
             <div className="max-w-3xl mx-auto bg-slate-800 border border-slate-700 rounded-lg p-6">
 
                 {/* TERMS OF SERVICE */}
-                <h1 className="text-2xl font-semibold text-white mb-1">
+                <h1 className="text-2xl font-semibold text-white mb-1" id="terms_of_service">
                     Terms of Service
                 </h1>
                 <p className="text-sm text-slate-400 mb-6">
@@ -82,7 +92,7 @@ export default function TermsAndPrivacy() {
                 <hr className="my-10 border-slate-700" />
 
                 {/* PRIVACY POLICY */}
-                <h1 className="text-2xl font-semibold text-white mb-1">
+                <h1 className="text-2xl font-semibold text-white mb-1" id="privacy_policy">
                     Privacy Policy
                 </h1>
                 <p className="text-sm text-slate-400 mb-6">

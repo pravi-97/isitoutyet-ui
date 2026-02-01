@@ -11,6 +11,7 @@ import { AppProvider } from "./context/AppContext";
 import { Toaster } from "react-hot-toast";
 import MyShows from "./pages/MyShows";
 import TermsAndPrivacy from "./pages/TermsAndPrivacy";
+import ProfilePage from "./pages/ProfilePage";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/my-shows" element={<MyShows />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
 
           {/* Public routes */}

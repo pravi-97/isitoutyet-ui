@@ -90,7 +90,6 @@ const TrackedShowsGrid = () => {
       const changedShows = shows.filter(
         (show, index) => JSON.stringify(show) !== JSON.stringify(initialShows[index])
       );
-    //   console.log(changedShows);
       
       await updateTrackedShows(changedShows)
       .then((res) => {
