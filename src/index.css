@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+/* globals.css */
+@layer utilities {
+  .scrollbar-glass {
+    /* For Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+
+  /* For Chrome, Safari, and Edge */
+  .scrollbar-glass::-webkit-scrollbar {
+    height: 6px; /* Horizontal scrollbar height */
+  }
+
+  .scrollbar-glass::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-glass::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .scrollbar-glass::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+}

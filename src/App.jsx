@@ -19,7 +19,7 @@ export default function App() {
       <Toaster position="top-right" />
       <BrowserRouter>
         <Routes>
-          {/* Protected area (after login) */}
+          {/* 1. Protected area (ONLY logged in users) */}
           <Route
             element={
               <ProtectedRoute>
@@ -33,30 +33,18 @@ export default function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/my-shows" element={<MyShows />} />
             <Route path="/profile" element={<ProfilePage />} />
+            {/* REMOVED FROM HERE */}
           </Route>
 
-          {/* Public routes */}
-          <Route path="/login"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
-          <Route path="/signup"
-            element={
-              <PublicRoute>
-                <Signup />
-              </PublicRoute>
-            }
-          />
-          <Route path="/terms-and-privacy"
-            element={
-              <PublicRoute>
-                <TermsAndPrivacy />
-              </PublicRoute>
-            }
-          />
+          {/* 2. Authentication routes (ONLY logged out users) */}
+          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+          <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+
+          {/* 3. Global Public routes (Available to EVERYONE) */}
+          {/* We wrap this in AppLayout so they still see the header/footer */}
+          <Route element={<AppLayout />}>
+            <Route path="/terms-and-privacy" element={<TermsAndPrivacy />} />
+          </Route>
 
           {/* Catch-all */}
           <Route path="*" element={<Navigate to="/login" replace />} />

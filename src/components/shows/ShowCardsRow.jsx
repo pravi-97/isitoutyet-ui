@@ -9,7 +9,7 @@ export default function ShowCardsRow({ shows, title, message }) {
       <h2 className="text-lg font-semibold text-white mb-4">
         {title}
       </h2>
-      <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+      <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-glass">
         {shows.length === 0 && (
           <p className="text-slate-300">
             {message || "No shows found"}
