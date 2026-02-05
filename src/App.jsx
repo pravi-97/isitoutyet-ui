@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import MyShows from "./pages/MyShows";
 import TermsAndPrivacy from "./pages/TermsAndPrivacy";
 import ProfilePage from "./pages/ProfilePage";
+import About from "./pages/About";
 
 export default function App() {
   return (
@@ -33,20 +34,18 @@ export default function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/my-shows" element={<MyShows />} />
             <Route path="/profile" element={<ProfilePage />} />
-            {/* REMOVED FROM HERE */}
           </Route>
 
-          {/* 2. Authentication routes (ONLY logged out users) */}
-          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
-
-          {/* 3. Global Public routes (Available to EVERYONE) */}
-          {/* We wrap this in AppLayout so they still see the header/footer */}
+          <Route element={<AppLayout />}>
+            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+            <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+          </Route>
+          
           <Route element={<AppLayout />}>
             <Route path="/terms-and-privacy" element={<TermsAndPrivacy />} />
+            <Route path="/about" element={<About />} />
           </Route>
 
-          {/* Catch-all */}
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>

@@ -24,7 +24,7 @@ export default function SearchBar({ value, onChange, onSearch, nsfw, setNsfw }) 
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
                     <button
                         type="button"
-                        onClick={() => setNsfw(!nsfw)} // 3. This now updates the Home page state
+                        onClick={() => setNsfw(!nsfw)}
                         className={`
                             relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl 
                             text-[10px] font-bold tracking-wider transition-all duration-300 active:scale-95

@@ -53,3 +53,7 @@ export function updateUserDetails(name){
     method: "PUT"
   })
 }
+
+export function fetchShowsReleasingToday(page = 1) {
+  return apiFetch(`/shows/releasing-today?page=${page}`);
+}

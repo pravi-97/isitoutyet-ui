@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchTrendingShows, fetchMyDetails } from "../api/showApi";
+import { fetchTrendingShows, fetchMyDetails, fetchShowsReleasingToday } from "../api/showApi";
 import ShowCardsRow from "../components/shows/ShowCardsRow";
 import { logout } from "../services/authService";
 import SearchBar from "../components/SearchBar";
@@ -15,12 +15,14 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [myDetails, setMyDetails] = useState({});
   const [myShows, setMyShows] = useState([]);
+  const [airingToday, setAiringToday] = useState([]);
+  const [airingTodayError, setAiringTodayError] = useState(null);
   const navigate = useNavigate();
   const { myShowIds, setMyShowIds } = useMyShowIds();
   const [nsfw, setNsfw] = useState(false);
 
   const handleSearch = () => {
-    if (query.trim().length < 2) return;    
+    if (query.trim().length < 2) return;
     navigate(`/search?showName=${encodeURIComponent(query.trim())}&nsfw=${nsfw}`);
   };
 
@@ -33,6 +35,14 @@ export default function Home() {
       })
       .catch((err) => {
         if (!cancelled) setTrendingError(err.message);
+      });
+
+    fetchShowsReleasingToday(1)
+      .then((res) => {
+        if (!cancelled) setAiringToday(res.data.results ?? []);
+      })
+      .catch((err) => {
+        if (!cancelled) setAiringTodayError(err.message);
       });
 
     fetchMyDetails()
@@ -72,7 +82,8 @@ export default function Home() {
       {myShowIds.length > 0 ? <NotificationsInlineRow trackedCount={myShowIds.length} notificationsEnabled={true} /> : null}
 
       <ShowCardsRow shows={myShows} title={"My Shows"} message={"No shows tracked yet. Search or add a trending show to get started."} />
-      <ShowCardsRow shows={trending} title={"🔥Trending Shows"} message={"Loading Trending Shows..."} />
+      <ShowCardsRow shows={trending} title={"Todays Trending Shows🔥"} message={"Loading Trending Shows..."} />
+      <ShowCardsRow shows={airingToday} title={"Shows Airing Today"} message={"Loading Shows Aring Today..."} />
     </div>
   );
 }

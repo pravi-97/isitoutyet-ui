@@ -13,7 +13,7 @@ export default function TermsAndPrivacy() {
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     }, [location]);
     return (
-        <div className="min-h-screen bg-slate-900 text-slate-300 px-4 py-10">
+        <div className="min-h-screen bg-slate-900 text-slate-300 px-4 py-10" id="top">
             <div className="max-w-3xl mx-auto bg-slate-800 border border-slate-700 rounded-lg p-6">
 
                 {/* TERMS OF SERVICE */}

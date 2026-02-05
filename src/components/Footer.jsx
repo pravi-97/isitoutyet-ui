@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Brand/About - Spans 7 columns on desktop */}
           <div className="md:col-span-7 space-y-4">
             <div className="flex items-center gap-2">
-              <span className="text-xl">🔥</span>
+              {/* <span className="text-xl">🔥</span> */}
               <h3 className="font-bold text-slate-100 font-bold tracking-tighter text-xl">
                 IsIt<span className="text-indigo-500">Out</span>Yet
               </h3>
@@ -71,10 +71,12 @@ export default function Footer() {
             © {new Date().getFullYear()} IsItOutYet. Built for fans.
           </div>
           <div className="flex gap-6 text-xs text-slate-400">
-            <a href="#" className="hover:text-white transition-colors">Status</a>
-            <Link to="/terms-and-privacy" className="hover:text-white transition-colors">
+            <Link to="/about#top" className="hover:text-white transition-colors">
+              About
+            </Link>
+            <Link to="/terms-and-privacy#top" className="hover:text-white transition-colors">
               Terms &amp; Privacy
-            </Link>            <a href="#" className="hover:text-white transition-colors">Github</a>
+            </Link>
           </div>
         </div>
       </div>
