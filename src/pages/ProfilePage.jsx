@@ -1,12 +1,31 @@
 import { useEffect, useState } from "react";
-import { User, Mail, Trash2, Check, AlertTriangle, ShieldCheck } from "lucide-react";
+import { Mail, Trash2, Check, AlertTriangle } from "lucide-react";
 import { fetchMyDetailsMini, updateUserDetails } from "../api/showApi";
+import { useNavigate } from "react-router-dom";
+import { deleteMyAccount } from "../api/showApi";
+import toast from "react-hot-toast";
+import { logout } from "../services/authService";
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState({
     name: "",
     email: "",
   });
+
+  const deleteProfile = () => {
+    deleteMyAccount()
+      .then((res) => {
+        if (res.statusCode === 200) {
+          toast.success("Account deleted successfully");
+          logout();
+          navigate("/login");
+        }else{
+          toast.error(res.message);
+        }
+      })
+
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -131,7 +150,7 @@ export default function ProfilePage() {
                   Cancel
                 </button>
                 <button
-                  onClick={() => console.log("Final Delete triggered")}
+                  onClick={() => deleteProfile()}
                   className="flex-1 bg-red-600/10 hover:bg-red-600 text-red-500 hover:text-white py-2 rounded-lg text-xs font-bold border border-red-600/20 transition"
                 >
                   Delete

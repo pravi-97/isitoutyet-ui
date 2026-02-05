@@ -57,3 +57,9 @@ export function updateUserDetails(name){
 export function fetchShowsReleasingToday(page = 1) {
   return apiFetch(`/shows/releasing-today?page=${page}`);
 }
+
+export function deleteMyAccount(){
+  return apiFetch(`/user`, {
+    method: "DELETE"
+  })
+}

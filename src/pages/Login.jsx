@@ -14,10 +14,10 @@ export default function Login() {
     setError("");
 
     try {
-      await login(email, password); // email verification handled in service
+      await login(email, password);
       navigate("/");
-    } catch (err) {
-      setError(err.message || "Login failed");
+    } catch (err) {      
+      if(err.message === "Firebase: Error (auth/invalid-credential).") setError("Email or Password is Incorrrect!");
     }
   };
 
