@@ -108,16 +108,17 @@ export default function TermsAndPrivacy() {
                 </Section>
 
                 <Section title="2. Cookies & Local Storage">
-                    We use cookies and browser local storage to maintain your session and
-                    remember your app preferences. By continuing to use the app, you consent to the use of cookies and local storage
-                    as described in this policy.
+                    We use strictly necessary cookies and browser local storage to maintain your session and remember
+                    essential app preferences. These are required for the app to function properly and do not involve
+                    tracking or advertising.
                 </Section>
 
                 <Section title="3. Data Retention & Deletion">
                     We retain your data as long as your account is active.
-                    Under <b>GDPR/DPDPA</b>, you may request account deletion at any time.
-                    Upon request, your personal data will be purged from our active databases within 30 days.
+                    Under <b>GDPR/DPDPA</b>, you may delete your account at any time via the Profile page by selecting <b>Delete Account</b>.
+                    This action permanently deletes your account and all associated user data from our active databases within 30 days.
                 </Section>
+
 
                 <Section title="4. Data Sharing">
                     We <b>never</b> sell your personal data. Data is shared only with
