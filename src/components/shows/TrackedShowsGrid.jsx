@@ -118,12 +118,15 @@ const TrackedShowsGrid = () => {
       </div>
 
       {/* Grid Header */}
-      <div className="grid grid-cols-[3fr_repeat(5,1fr)] px-4 py-3 border-b border-slate-800">
+      <div className="grid grid-cols-1 md:grid-cols-[3fr_repeat(5,1fr)] px-4 py-3 border-b border-slate-800">
         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 self-end">
           TV Series
         </span>
+        <div className="md:hidden text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 mt-2">
+          Notifications
+        </div>
         {NOTIF_COLUMNS.map((col) => (
-          <div key={col.key} className="flex flex-col items-center gap-1">
+          <div key={col.key} className="hidden md:flex flex-col items-center gap-1">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300">
               {col.label}
             </span>
@@ -139,7 +142,7 @@ const TrackedShowsGrid = () => {
         {shows.map((show) => (
           <div
             key={show.showId}
-            className={`grid grid-cols-[3fr_repeat(5,1fr)] items-center px-4 py-4 rounded-xl border border-slate-800 transition-all
+            className={`grid grid-cols-1 md:grid-cols-[3fr_repeat(5,1fr)] items-center px-4 py-4 rounded-xl border border-slate-800 transition-all
               ${show.tracking ? "bg-slate-800/40 hover:bg-slate-800/80 shadow-sm" : "opacity-30 grayscale"}
             `}
           >
@@ -162,9 +165,23 @@ const TrackedShowsGrid = () => {
               </div>
             </div>
 
-            {/* Notification Columns (Specific Order) */}
+            {/* Mobile Notification Toggles */}
+            <div className="md:hidden flex justify-around mt-4">
+              {NOTIF_COLUMNS.map((col) => (
+                <div key={col.key} className="flex flex-col items-center gap-1">
+                  <span className="text-[9px] text-slate-500 font-medium">{col.label}</span>
+                  <TogglePill
+                    checked={show[col.key]}
+                    disabled={!show.tracking}
+                    onClick={() => toggleFlag(show.showId, col.key)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Notification Columns */}
             {NOTIF_COLUMNS.map((col) => (
-              <div key={col.key} className="flex justify-center">
+              <div key={col.key} className="hidden md:flex justify-center">
                 <TogglePill
                   checked={show[col.key]}
                   disabled={!show.tracking}

@@ -54,25 +54,25 @@ export default function ShowDetailsModal({ showId, onClose }) {
     };
 
     return (
-        <div className="modal-backdrop flex items-center justify-center p-4">
-            <div className={`modal relative transition-all duration-300 w-[95%] md:w-full ${isExpanded ? 'max-w-4xl' : 'max-w-2xl'} max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl`}>
+        <div className="modal-backdrop flex items-center justify-center p-0 md:p-4">
+            <div className={`modal relative transition-all duration-300 w-full h-full md:w-full md:h-auto ${isExpanded ? 'md:max-w-4xl' : 'md:max-w-2xl'} md:max-h-[90vh] overflow-y-auto rounded-none md:rounded-xl shadow-2xl`}>
 
                 <button className="close-btn absolute top-4 right-4 z-10 text-2xl" onClick={onClose}>×</button>
 
                 {loading && <p className="p-10 text-center text-slate-400">Loading show data...</p>}
 
                 {show && (
-                    <div className="p-4 md:p-6">
+                    <div className="p-3 md:p-6">
                         {/* Header Section: Poster + Title */}
-                        <div className="flex flex-col md:flex-row gap-6">
+                        <div className="flex flex-col md:flex-row gap-3 md:gap-6">
                             <img
                                 src={`https://image.tmdb.org/t/p/w300${show.poster_path}`}
                                 alt={show.name}
-                                className="w-full max-w-[180px] md:max-w-[200px] mx-auto md:mx-0 rounded-lg shadow-lg self-start"
+                                className="w-full max-w-[200px] mx-auto md:mx-0 rounded-lg shadow-lg self-start"
                             />
 
                             <div className="flex flex-col gap-2 flex-1 text-center md:text-left">
-                                <h2 className="text-2xl md:text-3xl font-extrabold text-white">{show.name}</h2>
+                                <h2 className="text-3xl font-extrabold text-white">{show.name}</h2>
                                 {show.tagline && <p className="italic text-slate-400 text-sm">"{show.tagline}"</p>}
 
                                 <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-2">
@@ -83,7 +83,7 @@ export default function ShowDetailsModal({ showId, onClose }) {
                                     ))}
                                 </div>
 
-                                <p className="mt-4 text-sm text-slate-300 leading-relaxed line-clamp-4 md:line-clamp-none">
+                                <p className="mt-4 text-sm text-slate-300 leading-relaxed">
                                     {show.overview}
                                 </p>
 
