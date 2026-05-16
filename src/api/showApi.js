@@ -16,6 +16,12 @@ export function getShowById(showId) {
   return apiFetch(`/shows/${showId}`);
 }
 
+export function setTimeZone(timeZone) {
+  return apiFetch(`/user/update/timezone?timeZone=${timeZone}`, {
+    method: "PUT"
+  })
+}
+
 // export function trackNewShowDefault(body){
 //   return apiFetch(`/track/new`, { method: "POST", body });
 // }

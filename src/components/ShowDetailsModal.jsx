@@ -42,7 +42,7 @@ export default function ShowDetailsModal({ showId, onClose }) {
 
         trackNewShowDefault(body)
             .then((res) => {
-                if (res.statusCode === 200) {
+                if (res.statusCode === 201) {
                     toast.success("Show added with default notifications.");
                     setMyShowIds(prev => prev.includes(showId) ? prev : [...prev, showId]);
                 } else {

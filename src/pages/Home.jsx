@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchTrendingShows, fetchMyDetails, fetchShowsReleasingToday } from "../api/showApi";
+import { fetchTrendingShows, fetchMyDetails, fetchShowsReleasingToday, setTimeZone } from "../api/showApi";
 import ShowCardsRow from "../components/shows/ShowCardsRow";
-import { logout } from "../services/authService";
+import { logout, auth } from "../services/authService";
 import SearchBar from "../components/SearchBar";
 import { useNavigate } from "react-router-dom";
 import { useMyShowIds } from "../context/AppContext";
@@ -51,6 +51,12 @@ export default function Home() {
         if (!cancelled) setMyShows(res.data.showDetails ?? []);
         const ids = res.data.showDetails?.map(s => s.id) ?? [];
         setMyShowIds(ids);
+        if(res.data.userDto?.timeZone == null){
+          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          setTimeZone(timezone);
+          const auth = getAuth();
+          auth.currentUser.getIdToken(true);
+        }
       })
       .catch((err) => {
         if (!cancelled) setMyDetailsError(err.message);
