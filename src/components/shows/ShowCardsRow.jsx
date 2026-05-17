@@ -44,6 +44,7 @@ export default function ShowCardsRow({ shows, title, message }) {
         ))}
       </div>
       <ShowDetailsModal
+        key={selectedShowId} 
         showId={selectedShowId}
         onClose={() => setSelectedShowId(null)}
       />

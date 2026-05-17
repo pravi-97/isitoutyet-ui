@@ -14,13 +14,20 @@ export default function ShowDetailsModal({ showId, onClose }) {
 
     useEffect(() => {
         if (!showId) return;
+
         setLoading(true);
         setIsExpanded(false);
-        getShowById(showId).then(json => {
-            setShow(json.data);
-            setIsTrackable(!["Ended", "Canceled"].includes(json.data.status));
-            setLoading(false);
-        });
+        setShow(null);
+
+        getShowById(showId)
+            .then(json => {
+                setShow(json.data);
+                setIsTrackable(!["Ended", "Canceled"].includes(json.data.status));
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+
     }, [showId]);
 
     if (!showId) return null;

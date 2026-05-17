@@ -54,6 +54,7 @@ export default function ShowCardsGrid({ shows, title }) {
                 </div>
             </div>
             <ShowDetailsModal
+                key={selectedShowId} 
                 showId={selectedShowId}
                 onClose={() => setSelectedShowId(null)}
             />
